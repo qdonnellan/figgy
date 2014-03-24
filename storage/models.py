@@ -20,7 +20,6 @@ class Book(BaseModel):
     id = models.CharField(max_length=30, primary_key=True, help_text="The primary identifier of this title, we get this value from publishers.")
     title = models.CharField(max_length=128, help_text="The title of this book.", db_index=True, null=False, blank=False)
     description = models.TextField(blank=True, null=True, default=None, help_text="Very short description of this book.")
-    version = models.CharField(max_length=4)
 
     def __unicode__(self):
         return u"Book %s" % self.title
