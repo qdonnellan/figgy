@@ -44,3 +44,13 @@ class TestTools(TestCase):
         book_xml = etree.fromstring(book_data)
         book_id = storage.tools.detect_book_id(book_xml)
         self.assertEqual(book_id, 'book-1')
+    def test_detect_book_id_function_with_bad_book_id_and_no_reference(self):
+        """
+        pass a book with no book id and no reference to any other books in the database
+
+        (in this case, there is no other book in the database), the book id should be "book-1"
+        """
+        book_data = "<book id='FOOFOOSAFARIBOOKS'><title>A title</title></book>"
+        book_xml = etree.fromstring(book_data)
+        book_id = storage.tools.detect_book_id(book_xml)
+        self.assertEqual(book_id, 'book-1')
