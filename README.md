@@ -81,3 +81,20 @@ You received an initial set of data with very loose specs and created a basic da
 $ python manage.py process_data_file data/update/*.xml
 ````
 
+## Author's Notes:
+
+These updates by [Quentin Donnellan](https://github.com/qdonnellan) are based on a few assumptions:
+
+1. The ISBN-10 scheme is reliable in all future xml updates; the other schemes (especially ISBN-13) may not be reliable
+2. It is beneficial for the book id to be in a standard format
+3. You do not need to query the version of the book
+4. The default version for a book should be '1.0'
+5. There are no problems in the alias schemes of the original books
+
+### Future updates
+
+Here is what I would recommend for future updates
+
+1. Include "version" as a property in the database before building sql
+2. Make the implied version controller more robust to handle things like "Second Version" "[3rd, 4th, 5th] Version", "Second Edition", etc.
+3. Document alias conflicts somewhere so that we can keep track of misses
