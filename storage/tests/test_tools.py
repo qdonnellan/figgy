@@ -108,7 +108,7 @@ class TestTools(TestCase):
         """
         book1 = '''
             <book id='book-1'>
-                <title>Updated, version 2.0</title>
+                <title>Updated, 2nd edition</title>
             </book>
             '''
         book1_xml = etree.fromstring(book1)
