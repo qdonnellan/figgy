@@ -13,7 +13,8 @@ def process_book_element(book_element):
     :returns:
     """
 
-    book, created = Book.objects.get_or_create(pk=book_element.get('id'))
+    book_id = detect_book_id(book_element)
+    book, created = Book.objects.get_or_create(pk=book_id)
     book.title = book_element.findtext('title')
     book.description = book_element.findtext('description')
 
