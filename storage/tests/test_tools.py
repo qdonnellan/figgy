@@ -126,3 +126,20 @@ class TestTools(TestCase):
         book1_xml = etree.fromstring(book1)
         version = storage.tools.detect_book_version(book1_xml)
         self.assertEqual('1.0', version)
+    def test_find_book_by_ISBN10_value(self):
+        """
+        find_book_by_ISBN('ISBN-10', value) should return the book ID of that book
+        """
+        book1 = '''
+            <book id='book-1'>
+                <title>Original</title>
+                <aliases>
+                    <alias scheme="ISBN-10" value="0158757819"/>
+                    <alias scheme="ISBN-13" value="0000000000123"/>
+                </aliases>
+            </book>
+            '''
+        book1_xml = etree.fromstring(book1)
+        storage.tools.process_book_element(book1_xml)
+        book_id = storage.tools.find_book_by_ISBN('ISBN-10', "0158757819")
+        self.assertEqual(book_id, 'book-1')
