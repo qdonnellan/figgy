@@ -64,7 +64,6 @@ def detect_book_id(book_element):
                     value = alias.get('value')
             if value:
                 book_id = find_book_by_ISBN('ISBN-10', value)
-                
     return book_id
 
 def find_book_by_ISBN(scheme, value):
