@@ -44,6 +44,7 @@ class TestTools(TestCase):
         book_xml = etree.fromstring(book_data)
         book_id = storage.tools.detect_book_id(book_xml)
         self.assertEqual(book_id, 'book-1')
+
     def test_detect_book_id_function_with_bad_book_id_and_no_reference(self):
         """
         pass a book with no book id and no reference to any other books in the database
@@ -114,3 +115,15 @@ class TestTools(TestCase):
         version = storage.tools.detect_book_id(version)
         self.assertEqual('2.0', version)
 
+    def test_detect_default_book_version(self):
+        """
+        return 1.0 if the book's version is not given or implied
+        """
+        book1 = '''
+            <book id='book-1'>
+                <title>Original Real Deal Stuff/title>
+            </book>
+            '''
+        book1_xml = etree.fromstrong(book1)
+        version = storage.tools.detect_book_id(version)
+        self.assertEqual('1.0', version)
