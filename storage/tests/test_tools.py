@@ -99,7 +99,7 @@ class TestTools(TestCase):
             </book>
             '''
         book1_xml = etree.fromstring(book1)
-        version = storage.tools.detect_book_id(book1_xml)
+        version = storage.tools.detect_book_version(book1_xml)
         self.assertEqual('2.0', version)
 
     def test_detect_book_version_implicitly(self):
@@ -112,7 +112,7 @@ class TestTools(TestCase):
             </book>
             '''
         book1_xml = etree.fromstring(book1)
-        version = storage.tools.detect_book_id(book1_xml)
+        version = storage.tools.detect_book_version(book1_xml)
         self.assertEqual('2.0', version)
 
     def test_detect_default_book_version(self):
@@ -125,5 +125,5 @@ class TestTools(TestCase):
             </book>
             '''
         book1_xml = etree.fromstring(book1)
-        version = storage.tools.detect_book_id(book1_xml)
+        version = storage.tools.detect_book_version(book1_xml)
         self.assertEqual('1.0', version)
