@@ -84,7 +84,7 @@ class TestTools(TestCase):
             </book>
             '''
         book1_updated_xml = etree.fromstring(book1_updated)
-        book1_updated_id = book_id = storage.tools.detect_book_id(book1_updated_xml)
+        book1_updated_id = storage.tools.detect_book_id(book1_updated_xml)
         self.assertEqual(book1_updated_id, 'book-1')
 
     def test_detect_book_version_directly(self):
