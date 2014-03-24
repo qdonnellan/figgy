@@ -36,3 +36,11 @@ class TestTools(TestCase):
         self.assertEqual(Alias.objects.get(scheme='ISBN-10').value, '0158757819')
         self.assertEqual(Alias.objects.get(scheme='ISBN-13').value, '0000000000123')
 
+    def test_detect_book_id_function_with_good_input(self):
+        """
+        detect_book_id(book_element) should return "book-N" where N is an integer
+        """
+        book_data = "<book id='book-1'><title>A title</title></book>"
+        book_xml = etree.fromstring(book_data)
+        book_id = storage.tools.detect_book_id(book_xml)
+        self.assertEqual(book_id, 'book-1')
