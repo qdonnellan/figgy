@@ -126,6 +126,7 @@ class TestTools(TestCase):
         book1_xml = etree.fromstring(book1)
         version = storage.tools.detect_book_version(book1_xml)
         self.assertEqual('1.0', version)
+
     def test_find_book_by_ISBN10_value(self):
         """
         find_book_by_ISBN('ISBN-10', value) should return the book ID of that book
@@ -143,3 +144,42 @@ class TestTools(TestCase):
         storage.tools.process_book_element(book1_xml)
         book_id = storage.tools.find_book_by_ISBN('ISBN-10', "0158757819")
         self.assertEqual(book_id, 'book-1')
+
+    def test_storage_tools_process_several_books_with_various_problems(self):
+        """
+        save two books with various problems in the database
+
+        assert that each problem is caught and fixed accordingly
+        the second book is simply an update to the first book, so there should
+        only be one book in the database when this is over
+        """
+        book1 = '''
+            <book id='BLABLABLA'>
+                <title>Original Real Deal Stuff</title>
+                <aliases>
+                    <alias scheme="ISBN-10" value="0158757819"/>
+                </aliases>
+            </book>
+            '''
+        book1_xml = etree.fromstring(book1)
+        storage.tools.process_book_element(book1_xml)
+        book1 = Book.objects.get(pk='book-1')
+        self.assertEqual(book1.title, 'Original Real Deal Stuff')
+        self.assertEqual(book1.version, '1.0')
+
+        book2 = '''
+            <book id="FOOFOOBARBAR">
+                <title>The first book, but 2nd edition, newer and better!</title>
+                <aliases>
+                    <alias scheme="ISBN-10" value="0158757819"/>
+                </aliases>
+            </book>
+        '''
+        book2_xml = etree.fromstring(book2)
+        storage.tools.process_book_element(book2_xml)
+        book2 = Book.objects.get(pk='book-1')
+        self.assertEqual(book2.title, 'The first book, but 2nd edition, newer and better!')
+        self.assertEqual(book2.version, '2.0')
+
+
+
