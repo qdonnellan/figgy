@@ -24,3 +24,18 @@ def process_book_element(book_element):
         book.aliases.get_or_create(scheme=scheme, value=value)
 
     book.save()
+
+def detect_book_version(book_element):
+    """
+    return the book version of the book_element passed
+
+    attempt to find the book version by implied usage of '2nd edition' in the book's title
+    default is 1.0
+    """
+    book_version = book_element.findtext('version')
+    if not book_version:
+        if '2nd edition' in book_element.findtext('title').lower():
+            book_version = '2.0'
+        else:
+            book_version = '1.0'
+    return book_version
