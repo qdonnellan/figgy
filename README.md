@@ -45,7 +45,7 @@ The tests for this project are managed by `tox`, a Python package.
 First, install `tox` via `easy_install` (or `pip`).
 
 Prior to running tox, be sure to create a `figgy/_local_tests.py` file by copying
-`figgy/_local_tests.py.example` to `figgy/_local_tests.py`.  Any modifications to the test settings
+`figgy/local.py.example` to `figgy/_local_tests.py`.  Any modifications to the test settings
 should be performed in the developer's `_local_test.py`.
 
 To run the tests:
