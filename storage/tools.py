@@ -22,8 +22,8 @@ def process_book_element(book_element):
     for alias in book_element.xpath('aliases/alias'):
         scheme = alias.get('scheme')
         value = alias.get('value')
-
-        book.aliases.get_or_create(scheme=scheme, value=value)
+        try:
+            book.aliases.get_or_create(scheme=scheme, value=value)
 
     book.save()
 
