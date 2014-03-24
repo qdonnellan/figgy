@@ -54,3 +54,35 @@ class TestTools(TestCase):
         book_xml = etree.fromstring(book_data)
         book_id = storage.tools.detect_book_id(book_xml)
         self.assertEqual(book_id, 'book-1')
+
+    def test_detect_updated_book_with_bad_book_id(self):
+        """
+        pass a book with a bad book ID but that is version 2 of an existing book
+
+        the returned book id should be the same as the original book
+        """
+        book1 = '''
+            <book id='book-1'>
+                <title>Original</title>
+                <aliases>
+                    <alias scheme="ISBN-10" value="0158757819"/>
+                    <alias scheme="ISBN-13" value="0000000000123"/>
+                </aliases>
+            </book>
+            '''
+        book1_xml = etree.fromstrong(book1)
+        storage.tools.process_book_element(book1_xml)
+
+        book1_updated = '''
+            <book id='BLABLABLA'>
+                <title>Updated!</title>
+                <version>2.0</version>
+                <aliases>
+                    <alias scheme="ISBN-10" value="0158757819"/>
+                    <alias scheme="ISBN-13" value="0000000000123"/>
+                </aliases>
+            </book>
+            '''
+        book1_updated_xml = etree.fromstrong(book1_updated)
+        book1_updated_id = book_id = storage.tools.detect_book_id(book1_updated_xml)
+        self.assertEqual(book1_updated_id, 'book-1')
