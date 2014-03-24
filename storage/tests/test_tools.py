@@ -71,7 +71,7 @@ class TestTools(TestCase):
                 </aliases>
             </book>
             '''
-        book1_xml = etree.fromstrong(book1)
+        book1_xml = etree.fromstring(book1)
         storage.tools.process_book_element(book1_xml)
 
         book1_updated = '''
@@ -84,7 +84,7 @@ class TestTools(TestCase):
                 </aliases>
             </book>
             '''
-        book1_updated_xml = etree.fromstrong(book1_updated)
+        book1_updated_xml = etree.fromstring(book1_updated)
         book1_updated_id = book_id = storage.tools.detect_book_id(book1_updated_xml)
         self.assertEqual(book1_updated_id, 'book-1')
 
@@ -98,7 +98,7 @@ class TestTools(TestCase):
                 <version>2.0</version>
             </book>
             '''
-        book1_xml = etree.fromstrong(book1)
+        book1_xml = etree.fromstring(book1)
         version = storage.tools.detect_book_id(version)
         self.assertEqual('2.0', version)
 
@@ -111,7 +111,7 @@ class TestTools(TestCase):
                 <title>Updated, version 2.0</title>
             </book>
             '''
-        book1_xml = etree.fromstrong(book1)
+        book1_xml = etree.fromstring(book1)
         version = storage.tools.detect_book_id(version)
         self.assertEqual('2.0', version)
 
@@ -124,6 +124,6 @@ class TestTools(TestCase):
                 <title>Original Real Deal Stuff/title>
             </book>
             '''
-        book1_xml = etree.fromstrong(book1)
+        book1_xml = etree.fromstring(book1)
         version = storage.tools.detect_book_id(version)
         self.assertEqual('1.0', version)
