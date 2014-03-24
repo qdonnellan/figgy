@@ -39,3 +39,27 @@ def detect_book_version(book_element):
         else:
             book_version = '1.0'
     return book_version
+def detect_book_id(book_element):
+    """
+    return the correct book_id of the book_element passed
+
+    may have to conform the id to the standard "book-N"
+    """
+    book_id = book_element.get('id')
+    if not 'book-' in book_id:
+        if detect_book_version(book_element) == '1.0':
+            # if the current version is 1.0
+            current_book_count = Book.objects.count()
+            book_id = 'book-%d' % (current_book_count + 1)
+        else:
+            # if the current version is anything other than 1.0
+            # then we need to find it's parent book id!
+            value = None
+            for alias in book_element.xpath('aliases/alias'):
+                if alias.get('scheme') == 'ISBN-10':
+                    # right now, it looks like ISBN-10 is the most stable
+                    value = alias.get('value')
+            if value:
+                book_id = find_book_by_ISBN('ISBN-10', value)
+                
+    return book_id
