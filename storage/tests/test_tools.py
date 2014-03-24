@@ -86,3 +86,17 @@ class TestTools(TestCase):
         book1_updated_xml = etree.fromstrong(book1_updated)
         book1_updated_id = book_id = storage.tools.detect_book_id(book1_updated_xml)
         self.assertEqual(book1_updated_id, 'book-1')
+
+    def test_detect_book_version_directly(self):
+        """
+        return the book version of a book with explicit version
+        """
+        book1 = '''
+            <book id='book-1'>
+                <title>Original</title>
+                <version>2.0</version>
+            </book>
+            '''
+        book1_xml = etree.fromstrong(book1)
+        version = storage.tools.detect_book_id(version)
+        self.assertEqual('2.0', version)
