@@ -181,5 +181,15 @@ class TestTools(TestCase):
         self.assertEqual(book2.title, 'The first book, but 2nd edition, newer and better!')
         self.assertEqual(book2.version, '2.0')
 
+    def test_that_book_version_is_saved_to_model_database(self):
+        """
+        test that the book version is saved to the database
+        """
+        book_data = "<book id='book-1'><title>A title</title></book>"
+        book_xml = etree.fromstring(book_data)
+        storage.tools.process_book_element(book_xml)
+        book = Book.objects.get(pk='book-1')
+        self.assertEqual(book.version, '1.0')
+        
 
 
