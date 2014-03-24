@@ -39,6 +39,7 @@ def detect_book_version(book_element):
         else:
             book_version = '1.0'
     return book_version
+
 def detect_book_id(book_element):
     """
     return the correct book_id of the book_element passed
@@ -62,4 +63,18 @@ def detect_book_id(book_element):
             if value:
                 book_id = find_book_by_ISBN('ISBN-10', value)
                 
+    return book_id
+
+def find_book_by_ISBN(scheme, value):
+    """
+    return the book id of the book associated with the ISBN scheme and value
+
+    current supports ISBN-10 scheme only
+    """
+    book_id = None
+    if scheme == 'ISBN-10':
+        for book in Book.objects.all():
+            for alias in book.aliases.all():
+                if alias.value == value:
+                    book_id = book.id
     return book_id
