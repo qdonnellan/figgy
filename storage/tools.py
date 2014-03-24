@@ -24,7 +24,8 @@ def process_book_element(book_element):
         value = alias.get('value')
         try:
             book.aliases.get_or_create(scheme=scheme, value=value)
-
+        except:
+            pass
     book.save()
 
 def detect_book_version(book_element):
